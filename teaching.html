@@ -4,12 +4,14 @@ title: Teaching
 {% assign materials = site.data.materials %}
 {% assign material_base = materials.use_local %}
 <p class="eyebrow">Teaching</p>
-<h1>Teaching</h1>
-<p>I enjoy teaching through open-ended problems that connect concrete calculations with broader mathematical ideas. The materials below were developed for the 2025 Consuman REU group.</p>
+<h1>Teaching and Mentoring</h1>
+<p>I enjoy teaching through open-ended problems that connect concrete calculations with broader mathematical ideas. 
+  A teaching statement can be found <a href="">here</a>.</p>
+<p>My teaching and mentoring experience includes graduate instruction at UC Berkeley, summer REU mentorship, and instruction at intensive inquiry-based summer programs. For my complete teaching record, see the <a href="{{ site.data.site.cv | relative_url }}">curriculum vitae</a>.</p>
 
 <section>
   <h2>2025 REU materials</h2>
-  <p>The introductory problem sets develop linear algebra, finite fields, power series, Haar measure, Hecke algebras, and affine Grassmannian ideas. The final item is a separate problem set on orbital integrals.</p>
+  <p>The materials below are a series of problem sets developed for the group I co-mentored with Ansuman Bardalai during the 2025 Berkeley Summer REU. The problem sets develop, in an inquiry-based style, fundamental concepts in geometric representation theory, including the spherical and affine Bruhat decompositions. They assume a first course in linear algebra, abstract algebra, and some basic notions from topology and measure theory. The final item is a problem set on nonarchimedean orbital integrals used to initiate the research portion of the REU.</p>
   <ul class="material-list">
   {% for item in materials.reu %}
     <li>
@@ -20,10 +22,4 @@ title: Teaching
     </li>
   {% endfor %}
   </ul>
-</section>
-
-<section>
-  <h2>Teaching and mentoring</h2>
-  <p>My teaching and mentoring experience includes graduate instruction at UC Berkeley, summer REU mentorship, and instruction at intensive inquiry-based summer programs.</p>
-  <p>For my complete teaching record, see the <a href="{{ site.data.site.cv | relative_url }}">curriculum vitae</a>.</p>
 </section>
