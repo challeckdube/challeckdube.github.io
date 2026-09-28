@@ -10,12 +10,16 @@ title: Teaching
 <section>
   <h2>2025 REU materials</h2>
   <p>The introductory problem sets develop linear algebra, finite fields, power series, Haar measure, Hecke algebras, and affine Grassmannian ideas. The final item is a separate problem set on orbital integrals.</p>
+  <ul class="material-list">
   {% for item in materials.reu %}
-  <article class="entry">
-    <h3>{{ item.title | escape }}</h3>
-    <p class="paper-links"><a href="{% if material_base %}{{ item.local | relative_url }}{% else %}{{ item.source }}{% endif %}">PDF</a>{% unless material_base %} <span class="entry-meta">(external copy)</span>{% endunless %}</p>
-  </article>
+    <li>
+      <span class="material-number">{% if item.number == 'OI' %}OI{% else %}{{ item.number }}{% endif %}</span>
+      <span class="material-title">{{ item.title | escape }}</span>
+      <a class="material-link" href="{% if material_base %}{{ item.local | relative_url }}{% else %}{{ item.source }}{% endif %}">PDF</a>
+      {% unless material_base %}<span class="entry-meta">(external copy)</span>{% endunless %}
+    </li>
   {% endfor %}
+  </ul>
 </section>
 
 <section>
