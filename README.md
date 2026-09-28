@@ -28,7 +28,6 @@ The shared layout automatically marks the current HTML page with `aria-current`.
 - `research.html`: research, papers, and notes. Existing paper and thesis placeholders still need your content.
 - `teaching.html`: teaching content. Existing course placeholders still need your content.
 - `talks.html`: generates the talk list from **`_data/talks.yml`**.
-- `cv.html`: PDF download and shared biography.
 - `404.html`: missing-page response, also using the shared layout.
 - `_layouts/default.html`: HTML head, header, sidebar, main container, and footer.
 - `assets/style.css`: shared styles.
@@ -75,7 +74,6 @@ For a project site, set `baseurl` in `_config.yml` to `/repository-name`.
 
 ## Design references
 
-- https://davidaretz.github.io/
 - https://academicpages.github.io/
 - https://github.com/academicpages/academicpages.github.io
 
