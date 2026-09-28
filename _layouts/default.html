@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+{% assign person = site.data.site %}
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title | escape }} | {{ person.name | escape }}</title>
+  <meta name="description" content="{{ page.title | escape }} — {{ person.name | escape }}. {{ person.description | escape }}">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="masthead-inner">
+      <a class="site-name" href="{{ '/index.html' | relative_url }}">{{ person.name | escape }}</a>
+      <nav aria-label="Main navigation">
+        {% for item in person.navigation %}
+        <a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% elsif page.url == '/' and item.url == '/index.html' %} aria-current="page"{% endif %}>{{ item.label | escape }}</a>
+        {% endfor %}
+      </nav>
+    </div>
+  </header>
+  <div class="layout">
+    <aside class="profile" aria-label="Academic profile">
+      <img class="portrait" src="{{ person.portrait | relative_url }}" alt="{{ person.short_name | escape }}" width="160" height="160">
+      <p class="profile-name">{{ person.short_name | escape }}</p>
+      <p class="profile-field">{{ person.field | escape }}</p>
+      <p class="profile-description">{{ person.description | escape }}</p>
+      <p class="profile-affiliation">{{ person.affiliation | escape }}</p>
+      <div class="profile-links">
+        <a href="{{ '/index.html#contact' | relative_url }}">Contact</a>
+        <a href="{{ person.cv | relative_url }}">Curriculum vitae</a>
+      </div>
+    </aside>
+    <main id="main">{{ content }}</main>
+  </div>
+  <footer><div class="footer-inner">
+    <span>© {{ person.short_name | escape }}</span>
+    <span>{{ person.footer | escape }}</span>
+  </div></footer>
+</body>
+</html>

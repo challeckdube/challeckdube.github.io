@@ -1,0 +1,30 @@
+# Edit personal information and header navigation here.
+# biography_html accepts HTML; other fields are plain text.
+name: Cassandra (Cass) Halleck-Dubé
+short_name: Cass Halleck-Dubé
+field: Mathematics
+description: Geometric representation theory and the Langlands program.
+affiliation: MPIM Bonn
+portrait: /assets/chd.jpg
+email: halleckdube@mpim-bonn.mpg.de
+address:
+- Max Planck Institute for Mathematics
+- Vivatsgasse 7
+- 53111 Bonn, Germany
+biography_html: |
+  In Spring 2026, I completed my PhD at UC Berkeley under <a href="https://math.berkeley.edu/~swshin/">Sug Woo Shin</a>.
+  During the 2026-2027 academic year, I will be visiting as a postdoctoral fellow at the <a href="https://www.mpim-bonn.mpg.de/">Max Planck Institute for Mathematics</a>, mentored by <a href="https://www.math.uni-bonn.de/people/kaletha/">Tasho Kaletha</a>.
+  Beginning in 2027, I will be a Griffiths Assistant Professor at <a href="https://math.duke.edu/">Duke University</a>.
+cv: /files/cv.pdf
+footer: Mathematics · Research · Teaching
+navigation:
+- label: About
+  url: /index.html
+- label: Research
+  url: /research.html
+- label: Teaching
+  url: /teaching.html
+- label: Talks
+  url: /talks.html
+- label: CV
+  url: /files/cv.pdf

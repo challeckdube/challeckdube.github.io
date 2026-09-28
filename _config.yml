@@ -1,0 +1,13 @@
+url: "https://challeckdube.github.io"
+baseurl: ""
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - files/README.md
+  - files/demo

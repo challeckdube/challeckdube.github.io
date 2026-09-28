@@ -1,52 +1,77 @@
-# Connor Halleck-Dube — academic website
+# Academic website
 
-## Preview
+A GitHub Pages / Jekyll site with a shared layout. No browser JavaScript is required.
 
-Unzip this folder, then double-click `index.html`. Navigation and styling work directly from your filesystem. Alternatively, run `python3 -m http.server 8000` inside the folder and visit http://localhost:8000.
+## Edit personal information or navigation in one place
 
-## Before publishing
+Edit **`_data/site.yml`** for the full name, short display name, research description,
+affiliation, portrait, email, postal address, biography, PDF CV path, and header links.
+The full name appears in the masthead and browser titles; the short name appears in
+the sidebar, homepage heading, portrait alternative text, and copyright line.
+`biography_html` accepts HTML links. The other fields are plain text and are escaped.
 
-The name and broad research interests are drafted from supplied context. Review the wording. Everything in square brackets is a placeholder: replace it or remove the corresponding section. The sample paper, talk, course, and CV entries are examples, not factual claims.
+The `navigation` list controls every page’s header. For example:
 
-1. Add your position, institution, and biography to `index.html`.
-2. Replace `[Current institution]` in the sidebar of all five main pages.
-3. Add your email and address in the Contact section of `index.html`. To make email clickable: `<a href="mailto:YOUR-EMAIL">YOUR-EMAIL</a>`.
-4. Add your real papers to `research.html`. Copy an `<article class="entry">...</article>` block for each paper. Comments show where PDF and arXiv links go. Remove placeholder notices after adding real entries.
-5. Complete `teaching.html`, `talks.html`, and `cv.html`; delete unused sections.
-6. Put your CV in `files/cv.pdf`. In `cv.html`, uncomment the supplied download link and remove the “not yet added” notice.
-7. Optionally save your portrait as `assets/portrait.jpg`. Each main HTML page includes the exact image tag in a comment after the initials monogram; replace the monogram with that tag. Initials are intentional and work if you prefer no portrait.
-8. Optional: add verified ORCID, arXiv author, or institutional links using the sidebar comment.
+```yaml
+  - label: New page
+    url: /new-page.html
+```
 
-## Publish on GitHub Pages
+Keep local paths rooted with `/`. Jekyll’s `relative_url` filter adds the configured
+`baseurl`. The CV navigation link intentionally opens the PDF, as on the original
+homepage; change its URL to `/cv.html` if you prefer the HTML introduction.
+The shared layout automatically marks the current HTML page with `aria-current`.
 
-1. Create a public repository named `YOUR-USERNAME.github.io`, initialized with a README.
-2. Upload the CONTENTS of this folder to the repository root, so `index.html` sits at the top level, not inside an `academic-website` subfolder. Preserve the `assets` and `files` folders.
-3. Include the empty `.nojekyll` file. If your upload interface omits hidden files, use Add file → Create new file, name it `.nojekyll`, and save it.
-4. In Settings → Pages, choose Deploy from a branch, `main`, and `/(root)`; click Save.
-5. Open `https://YOUR-USERNAME.github.io/` after deployment completes (allow up to ten minutes).
-6. Later, edit HTML or upload replacement PDFs and commit the changes. GitHub automatically republishes.
+## Page content and talks
 
-For a project repository, the normal pages use relative URLs and work under a subdirectory. Change the homepage link in `404.html` from `/` to `/REPOSITORY-NAME/`. The included 404 page otherwise targets a user site. Custom domain setup is optional; no domain or canonical URL has been assumed.
+- `index.html`: research overview and contact section; biography and contact values come from the shared data.
+- `research.html`: research, papers, and notes. Existing paper and thesis placeholders still need your content.
+- `teaching.html`: teaching content. Existing course placeholders still need your content.
+- `talks.html`: generates the talk list from **`_data/talks.yml`**.
+- `cv.html`: PDF download and shared biography.
+- `404.html`: missing-page response, also using the shared layout.
+- `_layouts/default.html`: HTML head, header, sidebar, main container, and footer.
+- `assets/style.css`: shared styles.
+- `files/cv.pdf`: downloadable CV, unchanged by the template refactor.
 
-## Editing guide
+The 14 talks were transcribed from the September 2026 PDF CV, preserving titles,
+venues, dates, invited-talk labels, and named collaborators. The 2016 and 2017
+entries intentionally have year-only dates. Add new talks to `_data/talks.yml` in
+reverse chronological order; year headings are generated automatically. Updating
+the PDF does not automatically update this data file.
 
-- `index.html`: biography, research overview, contact.
-- `research.html`: research, publications, abstracts, thesis, notes.
-- `teaching.html`: courses and resources.
-- `talks.html`: talks and seminars.
-- `cv.html`: CV sections and optional PDF link.
-- `404.html`: missing-page response on GitHub Pages.
-- `assets/style.css`: all layout, typography, colors, mobile, and print rules.
-- `assets/favicon.svg`: simple initial favicon.
-- `files/`: public PDFs.
+To add a page, create an HTML file with this front matter and page content, then
+add its link to `_data/site.yml`:
 
-Headers, sidebars, and footers are repeated in the HTML so every page remains usable without JavaScript or a generator. Update them in all five pages when changing affiliation, name, or navigation. Each page marks its own active navigation link with `aria-current="page"`.
+```html
+---
+title: New page
+---
+<h1>New page</h1>
+<p>Page content.</p>
+```
 
-Colors are CSS variables at the start of the stylesheet. Body text uses system fonts; headings use Georgia. Native `<details>` elements provide expandable abstracts. The site includes a skip link, keyboard focus indicators, wrapping mobile navigation, and print styles.
+The default layout is selected in `_config.yml`; do not copy the header or sidebar.
 
-To add a page, copy an existing HTML file, edit the title, description, and `<main>`, and update the navigation in every page. Use `.html` links for compatibility with both local preview and GitHub Pages.
+## Preview locally
 
-For mathematical notation, you can add MathJax later; it is intentionally not loaded by default. Unicode symbols or simple HTML work without a dependency.
+Install Ruby and Bundler, then run:
+
+```sh
+bundle install
+bundle exec jekyll serve
+```
+
+Open http://localhost:4000. Jekyll builds the complete HTML into `_site/`.
+Opening the source HTML directly will not render the templates. Generated pages
+work without JavaScript. Do not commit `_site/`.
+
+## GitHub Pages
+
+In Settings → Pages, use **Deploy from a branch**, **main**, **/(root)**.
+GitHub Pages builds Jekyll on each commit. Do **not** add `.nojekyll`, which would
+bypass the shared templates. The site URL is https://challeckdube.github.io/.
+For a project site, set `baseurl` in `_config.yml` to `/repository-name`.
 
 ## Design references
 
@@ -54,4 +79,4 @@ For mathematical notation, you can add MathJax later; it is intentionally not lo
 - https://academicpages.github.io/
 - https://github.com/academicpages/academicpages.github.io
 
-No source code or personal photograph from either reference is included. You may freely modify and use these generated files.
+No source code or personal photograph from these references is included.

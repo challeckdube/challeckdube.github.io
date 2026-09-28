@@ -1,8 +1,22 @@
-<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Talks | Cassandra (Cass) Halleck-Dubé</title><meta name="description" content="About — Cassandra (Cass) Halleck-Dubé. Geometric representation theory and the Langlands program."><meta name="color-scheme" content="light"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/style.css"></head>
-  
-<body><a class="skip-link" href="#main">Skip to content</a><header class="masthead"><div class="masthead-inner"><a class="site-name" href="index.html">Cassandra (Cass) Halleck-Dubé</a><nav aria-label="Main navigation"><a href="index.html" aria-current="page">About</a><a href="research.html">Research</a><a href="teaching.html">Teaching</a><a href="talks.html">Talks</a><a href="files/cv.pdf">CV</a></nav></div></header>
-<div class="layout"><aside class="profile" aria-label="Academic profile"><img class="portrait" src="assets/chd.jpg" alt="Cass Halleck-Dubé" width="160" height="160"> <!-- To use a photo, replace the monogram div with: <img class="portrait" src="assets/portrait.jpg" alt="Cass Halleck-Dubé" width="160" height="160"> -->
-<p class="profile-name">Cass<br> Halleck-Dubé</p><p class="profile-field">Mathematics</p><p class="profile-description">Geometric representation theory<br>and the Langlands program</p><p class="profile-affiliation placeholder">MPIM Bonn</p><div class="profile-links"><a href="index.html#contact">Contact</a><a href="files/cv.pdf">Curriculum vitae</a><!-- Add verified ORCID, arXiv, or institutional profile links here. --></div></aside>
-<main id="main"><p class="eyebrow">Talks</p><h1>Talks &amp; seminars</h1><p class="placeholder">[Add selected talks and seminar activities.]</p><section><h2>Selected talks</h2><p class="editor-note">Replace this example with a talk you have given or an announced upcoming talk.</p><article class="entry"><p class="entry-meta">[Date] · [City or online]</p><h3>[Title of talk]</h3><p>[Seminar or conference, institution]</p><details><summary>Abstract</summary><p>[Talk abstract.]</p></details><!-- Add slides or notes links only after uploading the files. --></article></section><section><h2>Seminar organization</h2><p class="placeholder">[Seminar name, institution, dates, and link. Remove this section if not applicable.]</p></section></main></div>
-<footer><div class="footer-inner"><span>© Connor Halleck-Dube</span><span>Mathematics · Research · Teaching</span></div></footer></body></html>
+---
+title: Talks
+---
+<p class="eyebrow">Talks</p>
+<h1>Talks &amp; seminars</h1>
+<p>Talks listed in my <a href="{{ site.data.site.cv | relative_url }}">curriculum vitae</a>, in reverse chronological order.</p>
+{% for talk in site.data.talks %}
+{% assign year = talk.date | slice: 0, 4 %}
+{% if forloop.first %}
+<section aria-labelledby="year-{{ year }}"><h2 id="year-{{ year }}">{{ year }}</h2>
+{% elsif year != previous_year %}
+</section><section aria-labelledby="year-{{ year }}"><h2 id="year-{{ year }}">{{ year }}</h2>
+{% endif %}
+<article class="entry">
+  <p class="entry-meta"><time datetime="{{ talk.date | escape }}">{{ talk.display_date | escape }}</time>{% if talk.invited %} · Invited talk{% endif %}</p>
+  <h3>{{ talk.title | escape }}</h3>
+  <p>{{ talk.venue | escape }}</p>
+  {% if talk.collaborators %}<p>With {{ talk.collaborators | escape }}.</p>{% endif %}
+</article>
+{% assign previous_year = year %}
+{% if forloop.last %}</section>{% endif %}
+{% endfor %}
