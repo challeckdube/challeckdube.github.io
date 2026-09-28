@@ -1,7 +1,5 @@
 # Connor Halleck-Dube — academic website
 
-A complete, dependency-free static website inspired by David Aretz’s uncluttered homepage and Academic Pages’ profile/sidebar structure. This is an original HTML/CSS implementation, not a fork of the Jekyll Academic Pages repository. No build step, JavaScript, package manager, web fonts, tracking, or external assets are required.
-
 ## Preview
 
 Unzip this folder, then double-click `index.html`. Navigation and styling work directly from your filesystem. Alternatively, run `python3 -m http.server 8000` inside the folder and visit http://localhost:8000.
