@@ -1,0 +1,77 @@
+# Materials linked from the former Berkeley page. Set use_local to true after
+# running scripts/download-materials.sh to serve the PDFs from this site.
+use_local: true
+research:
+  - title: Research statement
+    label: PDF
+    source: https://math.berkeley.edu/~chd/RS.pdf
+    local: /files/research/research-statement.pdf
+    description: Current research statement, including work on the weighted fundamental lemma and proposed projects.
+  - title: The Weighted Fundamental Lemma for nonsplit groups
+    label: Draft
+    source: https://math.berkeley.edu/~chd/expo/WFL.pdf
+    local: /files/research/weighted-fundamental-lemma-draft.pdf
+    description: Draft thesis manuscript on the cohomological weighted fundamental lemma for quasi-split groups.
+expository:
+  - title: Some Remarks on Galois Cohomology
+    source: https://math.berkeley.edu/~chd/expo/Gal_Coh.pdf
+    local: /files/expository/galois-cohomology.pdf
+  - title: Some Notes on the Berkeley 2021 RTG Workshop
+    source: https://math.berkeley.edu/~chd/expo/2021_RTG_Workshop_Ellenberg_Zureick_Brown.pdf
+    local: /files/expository/2021-rtg-workshop-notes.pdf
+  - title: GAGA
+    source: https://math.berkeley.edu/~chd/expo/GAGA.pdf
+    local: /files/expository/gaga.pdf
+  - title: Modular Forms and Sums of Squares
+    source: https://math.berkeley.edu/~chd/expo/Modular_Forms_Sums_of_Squares.pdf
+    local: /files/expository/modular-forms-and-sums-of-squares.pdf
+  - title: Artin Comparison Theorem
+    source: https://math.berkeley.edu/~chd/expo/Comparison_Theorem.pdf
+    local: /files/expository/artin-comparison-theorem.pdf
+  - title: Kontsevich's Formula for Rational Plane Curves
+    source: https://math.berkeley.edu/~chd/expo/kontsevich_formula.pdf
+    local: /files/expository/kontsevich-formula.pdf
+  - title: Slides on Kontsevich's Formula
+    source: https://math.berkeley.edu/~chd/expo/kontsevich_slides.pdf
+    local: /files/expository/kontsevich-formula-slides.pdf
+reu:
+  - number: 1
+    title: Problem Set 1
+    source: https://math.berkeley.edu/~chd/REU/REU_Pset1.pdf
+    local: /files/reu/problem-set-1.pdf
+  - number: 2
+    title: Problem Set 2
+    source: https://math.berkeley.edu/~chd/REU/REU_Pset2.pdf
+    local: /files/reu/problem-set-2.pdf
+  - number: 3
+    title: Problem Set 3
+    source: https://math.berkeley.edu/~chd/REU/REU_Pset3.pdf
+    local: /files/reu/problem-set-3.pdf
+  - number: 4
+    title: Problem Set 4
+    source: https://math.berkeley.edu/~chd/REU/REU_Pset4.pdf
+    local: /files/reu/problem-set-4.pdf
+  - number: 5
+    title: Problem Set 5
+    source: https://math.berkeley.edu/~chd/REU/REU_Pset5.pdf
+    local: /files/reu/problem-set-5.pdf
+  - number: 6
+    title: Problem Set 6
+    source: https://math.berkeley.edu/~chd/REU/REU_Pset6.pdf
+    local: /files/reu/problem-set-6.pdf
+  - number: 7
+    title: Problem Set 7
+    source: https://math.berkeley.edu/~chd/REU/REU_Pset7.pdf
+    local: /files/reu/problem-set-7.pdf
+  - number: 8
+    title: Problem Set 8
+    source: https://math.berkeley.edu/~chd/REU/REU_Pset8.pdf
+    local: /files/reu/problem-set-8.pdf
+  - number: 9
+    title: Problem Set 9
+    source: https://math.berkeley.edu/~chd/REU/REU_Pset9.pdf
+    local: /files/reu/problem-set-9.pdf
+  - number: OI
+    title: Orbital Integrals Problems
+    source: https://math.berkeley.edu/~chd/REU/REU_OI_Problems.pdf
+    local: /files/reu/orbital-integrals-problems.pdf

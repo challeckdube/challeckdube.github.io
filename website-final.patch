@@ -1,0 +1,514 @@
+From bf5839720040efadbdde66cbe713e3c69c9c21e3 Mon Sep 17 00:00:00 2001
+From: Codex <codex@openai.com>
+Date: Mon, 28 Sep 2026 16:03:46 +0300
+Subject: [PATCH] Remove redundant HTML CV page
+
+---
+ .gitignore            |  7 ++++
+ 404.html              |  9 +++-
+ Gemfile               |  2 +
+ README.md             | 96 +++++++++++++++++++++++++++----------------
+ _config.yml           | 13 ++++++
+ _data/site.yml        | 30 ++++++++++++++
+ _data/talks.yml       | 86 ++++++++++++++++++++++++++++++++++++++
+ _layouts/default.html | 44 ++++++++++++++++++++
+ cv.html               |  8 ----
+ index.html            | 24 ++++-------
+ research.html         | 15 +++----
+ talks.html            | 30 ++++++++++----
+ teaching.html         | 14 +++----
+ 13 files changed, 291 insertions(+), 87 deletions(-)
+ create mode 100644 .gitignore
+ create mode 100644 Gemfile
+ create mode 100644 _config.yml
+ create mode 100644 _data/site.yml
+ create mode 100644 _data/talks.yml
+ create mode 100644 _layouts/default.html
+ delete mode 100644 cv.html
+
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..66893aa
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,7 @@
++_site/
++.sass-cache/
++.jekyll-cache/
++.jekyll-metadata
++.bundle/
++vendor/
++Gemfile.lock
+diff --git a/404.html b/404.html
+index 28744ff..2216a7a 100644
+--- a/404.html
++++ b/404.html
+@@ -1 +1,8 @@
+-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Page not found | Connor Halleck-Dube</title><style>body{max-width:42rem;margin:15vh auto;padding:2rem;font:18px/1.7 system-ui;color:#243442}h1{font:2.5rem Georgia}a{color:#155c88}</style></head><body><p>404</p><h1>Page not found</h1><p>The address may have changed, or the page may no longer be available.</p><a href="/">Return to the homepage</a><!-- For a project site, change / to /repository-name/. --></body></html>
+\ No newline at end of file
++---
++title: Page not found
++permalink: /404.html
++---
++<p class="eyebrow">404</p>
++<h1>Page not found</h1>
++<p>The address may have changed, or the page may no longer be available.</p>
++<p><a href="{{ '/index.html' | relative_url }}">Return to the homepage</a></p>
+diff --git a/Gemfile b/Gemfile
+new file mode 100644
+index 0000000..75d9835
+--- /dev/null
++++ b/Gemfile
+@@ -0,0 +1,2 @@
++source "https://rubygems.org"
++gem "github-pages", group: :jekyll_plugins
+diff --git a/README.md b/README.md
+index 15a54a8..825fd81 100644
+--- a/README.md
++++ b/README.md
+@@ -1,52 +1,76 @@
+-# Connor Halleck-Dube — academic website
++# Academic website
+ 
+-## Preview
++A GitHub Pages / Jekyll site with a shared layout. No browser JavaScript is required.
+ 
+-Unzip this folder, then double-click `index.html`. Navigation and styling work directly from your filesystem. Alternatively, run `python3 -m http.server 8000` inside the folder and visit http://localhost:8000.
++## Edit personal information or navigation in one place
+ 
+-## Before publishing
++Edit **`_data/site.yml`** for the full name, short display name, research description,
++affiliation, portrait, email, postal address, biography, PDF CV path, and header links.
++The full name appears in the masthead and browser titles; the short name appears in
++the sidebar, homepage heading, portrait alternative text, and copyright line.
++`biography_html` accepts HTML links. The other fields are plain text and are escaped.
+ 
+-The name and broad research interests are drafted from supplied context. Review the wording. Everything in square brackets is a placeholder: replace it or remove the corresponding section. The sample paper, talk, course, and CV entries are examples, not factual claims.
++The `navigation` list controls every page’s header. For example:
+ 
+-1. Add your position, institution, and biography to `index.html`.
+-2. Replace `[Current institution]` in the sidebar of all five main pages.
+-3. Add your email and address in the Contact section of `index.html`. To make email clickable: `<a href="mailto:YOUR-EMAIL">YOUR-EMAIL</a>`.
+-4. Add your real papers to `research.html`. Copy an `<article class="entry">...</article>` block for each paper. Comments show where PDF and arXiv links go. Remove placeholder notices after adding real entries.
+-5. Complete `teaching.html`, `talks.html`, and `cv.html`; delete unused sections.
+-6. Put your CV in `files/cv.pdf`. In `cv.html`, uncomment the supplied download link and remove the “not yet added” notice.
+-7. Optionally save your portrait as `assets/portrait.jpg`. Each main HTML page includes the exact image tag in a comment after the initials monogram; replace the monogram with that tag. Initials are intentional and work if you prefer no portrait.
+-8. Optional: add verified ORCID, arXiv author, or institutional links using the sidebar comment.
++```yaml
++  - label: New page
++    url: /new-page.html
++```
+ 
+-## Publish on GitHub Pages
++Keep local paths rooted with `/`. Jekyll’s `relative_url` filter adds the configured
++`baseurl`. The CV navigation link intentionally opens the PDF, as on the original
++homepage; change its URL to `/cv.html` if you prefer the HTML introduction.
++The shared layout automatically marks the current HTML page with `aria-current`.
+ 
+-1. Create a public repository named `YOUR-USERNAME.github.io`, initialized with a README.
+-2. Upload the CONTENTS of this folder to the repository root, so `index.html` sits at the top level, not inside an `academic-website` subfolder. Preserve the `assets` and `files` folders.
+-3. Include the empty `.nojekyll` file. If your upload interface omits hidden files, use Add file → Create new file, name it `.nojekyll`, and save it.
+-4. In Settings → Pages, choose Deploy from a branch, `main`, and `/(root)`; click Save.
+-5. Open `https://YOUR-USERNAME.github.io/` after deployment completes (allow up to ten minutes).
+-6. Later, edit HTML or upload replacement PDFs and commit the changes. GitHub automatically republishes.
++## Page content and talks
+ 
+-For a project repository, the normal pages use relative URLs and work under a subdirectory. Change the homepage link in `404.html` from `/` to `/REPOSITORY-NAME/`. The included 404 page otherwise targets a user site. Custom domain setup is optional; no domain or canonical URL has been assumed.
++- `index.html`: research overview and contact section; biography and contact values come from the shared data.
++- `research.html`: research, papers, and notes. Existing paper and thesis placeholders still need your content.
++- `teaching.html`: teaching content. Existing course placeholders still need your content.
++- `talks.html`: generates the talk list from **`_data/talks.yml`**.
++- `404.html`: missing-page response, also using the shared layout.
++- `_layouts/default.html`: HTML head, header, sidebar, main container, and footer.
++- `assets/style.css`: shared styles.
++- `files/cv.pdf`: downloadable CV, unchanged by the template refactor.
+ 
+-## Editing guide
++The 14 talks were transcribed from the September 2026 PDF CV, preserving titles,
++venues, dates, invited-talk labels, and named collaborators. The 2016 and 2017
++entries intentionally have year-only dates. Add new talks to `_data/talks.yml` in
++reverse chronological order; year headings are generated automatically. Updating
++the PDF does not automatically update this data file.
+ 
+-- `index.html`: biography, research overview, contact.
+-- `research.html`: research, publications, abstracts, thesis, notes.
+-- `teaching.html`: courses and resources.
+-- `talks.html`: talks and seminars.
+-- `cv.html`: CV sections and optional PDF link.
+-- `404.html`: missing-page response on GitHub Pages.
+-- `assets/style.css`: all layout, typography, colors, mobile, and print rules.
+-- `assets/favicon.svg`: simple initial favicon.
+-- `files/`: public PDFs.
++To add a page, create an HTML file with this front matter and page content, then
++add its link to `_data/site.yml`:
+ 
+-Headers, sidebars, and footers are repeated in the HTML so every page remains usable without JavaScript or a generator. Update them in all five pages when changing affiliation, name, or navigation. Each page marks its own active navigation link with `aria-current="page"`.
++```html
++---
++title: New page
++---
++<h1>New page</h1>
++<p>Page content.</p>
++```
+ 
+-Colors are CSS variables at the start of the stylesheet. Body text uses system fonts; headings use Georgia. Native `<details>` elements provide expandable abstracts. The site includes a skip link, keyboard focus indicators, wrapping mobile navigation, and print styles.
++The default layout is selected in `_config.yml`; do not copy the header or sidebar.
+ 
+-To add a page, copy an existing HTML file, edit the title, description, and `<main>`, and update the navigation in every page. Use `.html` links for compatibility with both local preview and GitHub Pages.
++## Preview locally
+ 
+-For mathematical notation, you can add MathJax later; it is intentionally not loaded by default. Unicode symbols or simple HTML work without a dependency.
++Install Ruby and Bundler, then run:
++
++```sh
++bundle install
++bundle exec jekyll serve
++```
++
++Open http://localhost:4000. Jekyll builds the complete HTML into `_site/`.
++Opening the source HTML directly will not render the templates. Generated pages
++work without JavaScript. Do not commit `_site/`.
++
++## GitHub Pages
++
++In Settings → Pages, use **Deploy from a branch**, **main**, **/(root)**.
++GitHub Pages builds Jekyll on each commit. Do **not** add `.nojekyll`, which would
++bypass the shared templates. The site URL is https://challeckdube.github.io/.
++For a project site, set `baseurl` in `_config.yml` to `/repository-name`.
+ 
+ ## Design references
+ 
+@@ -54,4 +78,4 @@ For mathematical notation, you can add MathJax later; it is intentionally not lo
+ - https://academicpages.github.io/
+ - https://github.com/academicpages/academicpages.github.io
+ 
+-No source code or personal photograph from either reference is included. You may freely modify and use these generated files.
++No source code or personal photograph from these references is included.
+diff --git a/_config.yml b/_config.yml
+new file mode 100644
+index 0000000..410ee2d
+--- /dev/null
++++ b/_config.yml
+@@ -0,0 +1,13 @@
++url: "https://challeckdube.github.io"
++baseurl: ""
++defaults:
++  - scope:
++      path: ""
++    values:
++      layout: default
++exclude:
++  - README.md
++  - Gemfile
++  - Gemfile.lock
++  - files/README.md
++  - files/demo
+diff --git a/_data/site.yml b/_data/site.yml
+new file mode 100644
+index 0000000..5b7d45f
+--- /dev/null
++++ b/_data/site.yml
+@@ -0,0 +1,30 @@
++# Edit personal information and header navigation here.
++# biography_html accepts HTML; other fields are plain text.
++name: Cassandra (Cass) Halleck-Dubé
++short_name: Cass Halleck-Dubé
++field: Mathematics
++description: Geometric representation theory and the Langlands program.
++affiliation: MPIM Bonn
++portrait: /assets/chd.jpg
++email: halleckdube@mpim-bonn.mpg.de
++address:
++- Max Planck Institute for Mathematics
++- Vivatsgasse 7
++- 53111 Bonn, Germany
++biography_html: |
++  In Spring 2026, I completed my PhD at UC Berkeley under <a href="https://math.berkeley.edu/~swshin/">Sug Woo Shin</a>.
++  During the 2026-2027 academic year, I will be visiting as a postdoctoral fellow at the <a href="https://www.mpim-bonn.mpg.de/">Max Planck Institute for Mathematics</a>, mentored by <a href="https://www.math.uni-bonn.de/people/kaletha/">Tasho Kaletha</a>.
++  Beginning in 2027, I will be a Griffiths Assistant Professor at <a href="https://math.duke.edu/">Duke University</a>.
++cv: /files/cv.pdf
++footer: Mathematics · Research · Teaching
++navigation:
++- label: About
++  url: /index.html
++- label: Research
++  url: /research.html
++- label: Teaching
++  url: /teaching.html
++- label: Talks
++  url: /talks.html
++- label: CV
++  url: /files/cv.pdf
+diff --git a/_data/talks.yml b/_data/talks.yml
+new file mode 100644
+index 0000000..25e0cf2
+--- /dev/null
++++ b/_data/talks.yml
+@@ -0,0 +1,86 @@
++# Transcribed from files/cv.pdf, September 2026. Newest first.
++# Year-only dates are intentional: the CV gives no month or day.
++- date: '2026-02-04'
++  display_date: 4 February 2026
++  title: Geometry of the Weighted Fundamental Lemma
++  venue: Algebraic Geometry and Number Theory seminar, UC Davis
++  invited: true
++  collaborators: null
++- date: '2026-01-31'
++  display_date: 31 January 2026
++  title: The Weighted Fundamental Lemma and Geometric Endoscopy
++  venue: Junior Number Theory Days, Johns Hopkins University
++  invited: true
++  collaborators: null
++- date: '2025-09-09'
++  display_date: 9 September 2025
++  title: The Weighted Fundamental Lemma for nonsplit groups
++  venue: Workshop on Arthur’s Endoscopic Classification, University of Chicago Paris Center
++  invited: true
++  collaborators: null
++- date: '2024-06-19'
++  display_date: 19 June 2024
++  title: Hitchin Truncation for Relative Reductive Groups
++  venue: Spec ℚ(2πi)
++  invited: false
++  collaborators: null
++- date: '2022-10-12'
++  display_date: 12 October 2022
++  title: The Cartier Isomorphism and De Rham Cohomology in Characteristic p
++  venue: Number Theory Learning Seminar, UC Berkeley
++  invited: false
++  collaborators: null
++- date: '2022-05-03'
++  display_date: 3 May 2022
++  title: Moduli Space of Langlands Parameters
++  venue: Berkeley-Stanford Joint Number Theory Working Seminar
++  invited: false
++  collaborators: null
++- date: '2022-02-23'
++  display_date: 23 February 2022
++  title: Moduli space of curves and abelian varieties
++  venue: Number Theory Learning Seminar, UC Berkeley
++  invited: false
++  collaborators: null
++- date: '2022-02-16'
++  display_date: 16 February 2022
++  title: Representations of totally disconnected groups
++  venue: Automorphic Representations Learning Seminar, UC Berkeley
++  invited: false
++  collaborators: null
++- date: '2022-02-02'
++  display_date: 2 February 2022
++  title: Automorphic representations in the L²-sense
++  venue: Automorphic Representations Learning Seminar, UC Berkeley
++  invited: false
++  collaborators: null
++- date: '2021-09-24'
++  display_date: 24 September 2021
++  title: Construction of Quot schemes
++  venue: Student Arithmetic Geometry Seminar, UC Berkeley
++  invited: false
++  collaborators: null
++- date: '2021-09-15'
++  display_date: 15 September 2021
++  title: Base change and the q-expansion principle
++  venue: Student Number Theory Seminar, University of California, Berkeley, CA
++  invited: false
++  collaborators: null
++- date: '2021-09-08'
++  display_date: 8 September 2021
++  title: Modular forms and q-expansions in algebraic geometry
++  venue: Student Number Theory Seminar, University of California, Berkeley, CA
++  invited: false
++  collaborators: null
++- date: '2017'
++  display_date: '2017'
++  title: Enumerating Hassett’s decomposition of the moduli of curves
++  venue: MAA Student Paper Session, MathFest, Chicago, IL
++  invited: false
++  collaborators: Daniel Gershenson and Elaine Hou
++- date: '2016'
++  display_date: '2016'
++  title: Simplicial Complexes and Effective Divisors on M̄₀,ₙ
++  venue: MAA Student Paper Session, MathFest, Columbus, OH
++  invited: false
++  collaborators: Jocelyn Wang and Nick Wawrykow
+diff --git a/_layouts/default.html b/_layouts/default.html
+new file mode 100644
+index 0000000..c7b289b
+--- /dev/null
++++ b/_layouts/default.html
+@@ -0,0 +1,44 @@
++<!doctype html>
++<html lang="en">
++{% assign person = site.data.site %}
++<head>
++  <meta charset="utf-8">
++  <meta name="viewport" content="width=device-width, initial-scale=1">
++  <title>{{ page.title | escape }} | {{ person.name | escape }}</title>
++  <meta name="description" content="{{ page.title | escape }} — {{ person.name | escape }}. {{ person.description | escape }}">
++  <meta name="color-scheme" content="light">
++  <link rel="icon" href="{{ '/assets/favicon.svg' | relative_url }}" type="image/svg+xml">
++  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
++</head>
++<body>
++  <a class="skip-link" href="#main">Skip to content</a>
++  <header class="masthead">
++    <div class="masthead-inner">
++      <a class="site-name" href="{{ '/index.html' | relative_url }}">{{ person.name | escape }}</a>
++      <nav aria-label="Main navigation">
++        {% for item in person.navigation %}
++        <a href="{{ item.url | relative_url }}"{% if page.url == item.url %} aria-current="page"{% elsif page.url == '/' and item.url == '/index.html' %} aria-current="page"{% endif %}>{{ item.label | escape }}</a>
++        {% endfor %}
++      </nav>
++    </div>
++  </header>
++  <div class="layout">
++    <aside class="profile" aria-label="Academic profile">
++      <img class="portrait" src="{{ person.portrait | relative_url }}" alt="{{ person.short_name | escape }}" width="160" height="160">
++      <p class="profile-name">{{ person.short_name | escape }}</p>
++      <p class="profile-field">{{ person.field | escape }}</p>
++      <p class="profile-description">{{ person.description | escape }}</p>
++      <p class="profile-affiliation">{{ person.affiliation | escape }}</p>
++      <div class="profile-links">
++        <a href="{{ '/index.html#contact' | relative_url }}">Contact</a>
++        <a href="{{ person.cv | relative_url }}">Curriculum vitae</a>
++      </div>
++    </aside>
++    <main id="main">{{ content }}</main>
++  </div>
++  <footer><div class="footer-inner">
++    <span>© {{ person.short_name | escape }}</span>
++    <span>{{ person.footer | escape }}</span>
++  </div></footer>
++</body>
++</html>
+diff --git a/cv.html b/cv.html
+deleted file mode 100644
+index 4356d46..0000000
+--- a/cv.html
++++ /dev/null
+@@ -1,8 +0,0 @@
+-<!doctype html>
+-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>CV | Connor Halleck-Dube</title><meta name="description" content="CV — Connor Halleck-Dube. Geometric representation theory and the Langlands program."><meta name="color-scheme" content="light"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/style.css"></head>
+-<body><a class="skip-link" href="#main">Skip to content</a><header class="masthead"><div class="masthead-inner"><a class="site-name" href="index.html">Connor Halleck-Dube</a><nav aria-label="Main navigation"><a href="index.html">About</a><a href="research.html">Research</a><a href="teaching.html">Teaching</a><a href="talks.html">Talks</a><a href="cv.html" aria-current="page">CV</a></nav></div></header>
+-<div class="layout"><aside class="profile" aria-label="Academic profile"><div class="monogram" aria-hidden="true">CHD</div><!-- To use a photo, replace the monogram div with: <img class="portrait" src="assets/portrait.jpg" alt="Connor Halleck-Dube" width="160" height="160"> -->
+-<p class="profile-name">Connor<br> Halleck-Dube</p><p class="profile-field">Mathematics</p><p class="profile-description">Geometric representation theory<br>and the Langlands program</p><p class="profile-affiliation placeholder">[Current institution]</p><div class="profile-links"><a href="index.html#contact">Contact</a><a href="cv.html">Curriculum vitae</a><!-- Add verified ORCID, arXiv, or institutional profile links here. --></div></aside>
+-<main id="main"><p class="eyebrow">Curriculum vitae</p><h1>Curriculum vitae</h1><p class="editor-note">CV details have not yet been added.</p><!-- Upload files/cv.pdf, then replace the preceding paragraph with: <p><a class="button" href="files/cv.pdf">Download CV (PDF)</a></p> -->
+-<section><h2>Appointments</h2><dl class="timeline"><dt>[Dates]</dt><dd><h3>[Position]</h3><p>[Institution and department]</p></dd></dl></section><section><h2>Education</h2><dl class="timeline"><dt>[Year]</dt><dd><h3>[Degree in mathematics]</h3><p>[Institution]</p><p>[Thesis title and advisor(s), if desired]</p></dd></dl></section><section><h2>Awards &amp; fellowships</h2><p class="placeholder">[Award, awarding institution, and year. Remove this section if not needed.]</p></section><section><h2>Service</h2><p class="placeholder">[Selected academic service and activities.]</p></section></main></div>
+-<footer><div class="footer-inner"><span>© Connor Halleck-Dube</span><span>Mathematics · Research · Teaching</span></div></footer></body></html>
+\ No newline at end of file
+diff --git a/index.html b/index.html
+index 1c4cf73..f777e32 100644
+--- a/index.html
++++ b/index.html
+@@ -1,21 +1,15 @@
+-<!doctype html>
+-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>About | Cassandra (Cass) Halleck-Dubé</title><meta name="description" content="About — Cassandra (Cass) Halleck-Dubé. Geometric representation theory and the Langlands program."><meta name="color-scheme" content="light"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/style.css"></head>
+-  
+-<body><a class="skip-link" href="#main">Skip to content</a><header class="masthead"><div class="masthead-inner"><a class="site-name" href="index.html">Cassandra (Cass) Halleck-Dubé</a><nav aria-label="Main navigation"><a href="index.html" aria-current="page">About</a><a href="research.html">Research</a><a href="teaching.html">Teaching</a><a href="talks.html">Talks</a><a href="files/cv.pdf">CV</a></nav></div></header>
+-<div class="layout"><aside class="profile" aria-label="Academic profile"><img class="portrait" src="assets/chd.jpg" alt="Cass Halleck-Dubé" width="160" height="160"> <!-- To use a photo, replace the monogram div with: <img class="portrait" src="assets/portrait.jpg" alt="Cass Halleck-Dubé" width="160" height="160"> -->
+-<p class="profile-name">Cass<br> Halleck-Dubé</p><p class="profile-field">Mathematics</p><p class="profile-description">Geometric representation theory<br>and the Langlands program</p><p class="profile-affiliation placeholder">MPIM Bonn</p><div class="profile-links"><a href="index.html#contact">Contact</a><a href="files/cv.pdf">Curriculum vitae</a><!-- Add verified ORCID, arXiv, or institutional profile links here. --></div></aside>
+-  
+-<main id="main"><p class="eyebrow">Mathematics</p><h1>Cass Halleck-Dubé</h1>
++---
++title: About
++---
++<p class="eyebrow">Mathematics</p><h1>{{ site.data.site.short_name | escape }}</h1>
+ <p class="lead">I study geometric representation theory and the Langlands program.</p>
+ <p>My research interests include Hitchin fibrations, affine Springer fibers, and the geometry underlying the fundamental lemma. I am also interested in singular support and characteristic cycles in positive characteristic.</p>
+   
+-<p class="placeholder">In Spring 2026, I completed my PhD at UC Berkeley under <a href="https://math.berkeley.edu/~swshin/">Sug Woo Shin</a>. 
+-  During the 2026-2027 academic year, I will be visiting as a postdoctoral fellow at the <a href="https://www.mpim-bonn.mpg.de/">Max Planck Institute for Mathematics</a>, mentored by <a href="https://www.math.uni-bonn.de/people/kaletha/">Tasho Kaletha</a>. 
+-  Beginning in 2027, I will be a Griffiths Assistant Professor at <a href="https://math.duke.edu/">Duke University</a>.</p>
++<p>{{ site.data.site.biography_html }}</p>
+   
+ <section><h2>Research</h2><p>I am interested in the interaction between algebraic geometry, representation theory, and harmonic analysis, particularly through the geometry of moduli spaces.</p><ul class="topics"><li>Hitchin fibrations and endoscopy</li><li>Weighted fundamental lemmas</li><li>Affine Grassmannians and characteristic cycles</li></ul><p><a href="research.html">Research and publications <span aria-hidden="true">→</span></a></p></section>
+ 
+-<section id="contact"><h2>Contact</h2><dl class="contact"><dt>Email</dt><dd class="placeholder">halleckdube at mpim bonn mpg de</dd><dt>Address</dt><dd class="placeholder">Max Planck Institute for Mathematics, 
+-  Vivatsgasse 7, 
+-  Bonn, Germany</dd></dl></section></main></div>
+-<footer><div class="footer-inner"><span>© Cass Halleck-Dubé</span><span>Mathematics · Research · Teaching</span></div></footer></body></html>
++<section id="contact"><h2>Contact</h2><dl class="contact">
++  <dt>Email</dt><dd><a href="mailto:{{ site.data.site.email | escape }}">{{ site.data.site.email | escape }}</a></dd>
++  <dt>Address</dt><dd>{% for line in site.data.site.address %}{{ line | escape }}{% unless forloop.last %}<br>{% endunless %}{% endfor %}</dd>
++</dl></section>
+diff --git a/research.html b/research.html
+index 92a5436..9d5e57e 100644
+--- a/research.html
++++ b/research.html
+@@ -1,13 +1,8 @@
+-<!doctype html>
+-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Research | Cassandra (Cass) Halleck-Dubé</title><meta name="description" content="About — Cassandra (Cass) Halleck-Dubé. Geometric representation theory and the Langlands program."><meta name="color-scheme" content="light"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/style.css"></head>
+-  
+-<body><a class="skip-link" href="#main">Skip to content</a><header class="masthead"><div class="masthead-inner"><a class="site-name" href="index.html">Cassandra (Cass) Halleck-Dubé</a><nav aria-label="Main navigation"><a href="index.html" aria-current="page">About</a><a href="research.html">Research</a><a href="teaching.html">Teaching</a><a href="talks.html">Talks</a><a href="files/cv.pdf">CV</a></nav></div></header>
+-<div class="layout"><aside class="profile" aria-label="Academic profile"><img class="portrait" src="assets/chd.jpg" alt="Cass Halleck-Dubé" width="160" height="160"> <!-- To use a photo, replace the monogram div with: <img class="portrait" src="assets/portrait.jpg" alt="Cass Halleck-Dubé" width="160" height="160"> -->
+-<p class="profile-name">Cass<br> Halleck-Dubé</p><p class="profile-field">Mathematics</p><p class="profile-description">Geometric representation theory<br>and the Langlands program</p><p class="profile-affiliation placeholder">MPIM Bonn</p><div class="profile-links"><a href="index.html#contact">Contact</a><a href="files/cv.pdf">Curriculum vitae</a><!-- Add verified ORCID, arXiv, or institutional profile links here. --></div></aside>
+-
+-<main id="main"><p class="eyebrow">Research</p><h1>Research &amp; publications</h1><p class="lead">Geometric representation theory, the Langlands program, and the geometry of moduli spaces.</p>
++---
++title: Research
++---
++<p class="eyebrow">Research</p><h1>Research &amp; publications</h1><p class="lead">Geometric representation theory, the Langlands program, and the geometry of moduli spaces.</p>
+ <section><h2>Research interests</h2><p>My interests center on Hitchin fibrations, endoscopy, and affine Springer fibers, including their role in the weighted fundamental lemma. I am also interested in singular support and characteristic cycles on affine Grassmannians in positive characteristic.</p></section>
+ <section><h2>Papers &amp; preprints</h2><p class="editor-note">The entries below are placeholders, not a publication record.</p>
+ <article class="entry"><p class="entry-meta">[Year] · [Preprint or journal reference]</p><h3>[Title of paper]</h3><p>[Authors, in publication order]</p><p>[A short description of the result and its mathematical context.]</p><details><summary>Abstract</summary><p>[Insert the abstract here. Remove this expandable section if you prefer a shorter publication list.]</p></details><!-- Add real links here: <p class="paper-links"><a href="files/paper.pdf">PDF</a> <a href="https://arxiv.org/abs/ACTUAL-ID">arXiv</a></p> --></article>
+-</section><section><h2>Thesis &amp; notes</h2><article class="entry"><h3>[Thesis or expository note title]</h3><p class="placeholder">[Institution or context, year, and a brief description.]</p><!-- Add a link after uploading your PDF to files/. --></article></section></main></div>
+-<footer><div class="footer-inner"><span>© Connor Halleck-Dube</span><span>Mathematics · Research · Teaching</span></div></footer></body></html>
++</section><section><h2>Thesis &amp; notes</h2><article class="entry"><h3>[Thesis or expository note title]</h3><p class="placeholder">[Institution or context, year, and a brief description.]</p><!-- Add a link after uploading your PDF to files/. --></article></section>
+diff --git a/talks.html b/talks.html
+index 3745567..89f2a74 100644
+--- a/talks.html
++++ b/talks.html
+@@ -1,8 +1,22 @@
+-<!doctype html>
+-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Talks | Cassandra (Cass) Halleck-Dubé</title><meta name="description" content="About — Cassandra (Cass) Halleck-Dubé. Geometric representation theory and the Langlands program."><meta name="color-scheme" content="light"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/style.css"></head>
+-  
+-<body><a class="skip-link" href="#main">Skip to content</a><header class="masthead"><div class="masthead-inner"><a class="site-name" href="index.html">Cassandra (Cass) Halleck-Dubé</a><nav aria-label="Main navigation"><a href="index.html" aria-current="page">About</a><a href="research.html">Research</a><a href="teaching.html">Teaching</a><a href="talks.html">Talks</a><a href="files/cv.pdf">CV</a></nav></div></header>
+-<div class="layout"><aside class="profile" aria-label="Academic profile"><img class="portrait" src="assets/chd.jpg" alt="Cass Halleck-Dubé" width="160" height="160"> <!-- To use a photo, replace the monogram div with: <img class="portrait" src="assets/portrait.jpg" alt="Cass Halleck-Dubé" width="160" height="160"> -->
+-<p class="profile-name">Cass<br> Halleck-Dubé</p><p class="profile-field">Mathematics</p><p class="profile-description">Geometric representation theory<br>and the Langlands program</p><p class="profile-affiliation placeholder">MPIM Bonn</p><div class="profile-links"><a href="index.html#contact">Contact</a><a href="files/cv.pdf">Curriculum vitae</a><!-- Add verified ORCID, arXiv, or institutional profile links here. --></div></aside>
+-<main id="main"><p class="eyebrow">Talks</p><h1>Talks &amp; seminars</h1><p class="placeholder">[Add selected talks and seminar activities.]</p><section><h2>Selected talks</h2><p class="editor-note">Replace this example with a talk you have given or an announced upcoming talk.</p><article class="entry"><p class="entry-meta">[Date] · [City or online]</p><h3>[Title of talk]</h3><p>[Seminar or conference, institution]</p><details><summary>Abstract</summary><p>[Talk abstract.]</p></details><!-- Add slides or notes links only after uploading the files. --></article></section><section><h2>Seminar organization</h2><p class="placeholder">[Seminar name, institution, dates, and link. Remove this section if not applicable.]</p></section></main></div>
+-<footer><div class="footer-inner"><span>© Connor Halleck-Dube</span><span>Mathematics · Research · Teaching</span></div></footer></body></html>
++---
++title: Talks
++---
++<p class="eyebrow">Talks</p>
++<h1>Talks &amp; seminars</h1>
++<p>Talks listed in my <a href="{{ site.data.site.cv | relative_url }}">curriculum vitae</a>, in reverse chronological order.</p>
++{% for talk in site.data.talks %}
++{% assign year = talk.date | slice: 0, 4 %}
++{% if forloop.first %}
++<section aria-labelledby="year-{{ year }}"><h2 id="year-{{ year }}">{{ year }}</h2>
++{% elsif year != previous_year %}
++</section><section aria-labelledby="year-{{ year }}"><h2 id="year-{{ year }}">{{ year }}</h2>
++{% endif %}
++<article class="entry">
++  <p class="entry-meta"><time datetime="{{ talk.date | escape }}">{{ talk.display_date | escape }}</time>{% if talk.invited %} · Invited talk{% endif %}</p>
++  <h3>{{ talk.title | escape }}</h3>
++  <p>{{ talk.venue | escape }}</p>
++  {% if talk.collaborators %}<p>With {{ talk.collaborators | escape }}.</p>{% endif %}
++</article>
++{% assign previous_year = year %}
++{% if forloop.last %}</section>{% endif %}
++{% endfor %}
+diff --git a/teaching.html b/teaching.html
+index 91415c1..8eded71 100644
+--- a/teaching.html
++++ b/teaching.html
+@@ -1,10 +1,6 @@
+-<!doctype html>
+-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Teaching | Cassandra (Cass) Halleck-Dubé</title><meta name="description" content="About — Cassandra (Cass) Halleck-Dubé. Geometric representation theory and the Langlands program."><meta name="color-scheme" content="light"><link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/style.css"></head>
+-  
+-<body><a class="skip-link" href="#main">Skip to content</a><header class="masthead"><div class="masthead-inner"><a class="site-name" href="index.html">Cassandra (Cass) Halleck-Dubé</a><nav aria-label="Main navigation"><a href="index.html" aria-current="page">About</a><a href="research.html">Research</a><a href="teaching.html">Teaching</a><a href="talks.html">Talks</a><a href="files/cv.pdf">CV</a></nav></div></header>
+-<div class="layout"><aside class="profile" aria-label="Academic profile"><img class="portrait" src="assets/chd.jpg" alt="Cass Halleck-Dubé" width="160" height="160"> <!-- To use a photo, replace the monogram div with: <img class="portrait" src="assets/portrait.jpg" alt="Cass Halleck-Dubé" width="160" height="160"> -->
+-<p class="profile-name">Cass<br> Halleck-Dubé</p><p class="profile-field">Mathematics</p><p class="profile-description">Geometric representation theory<br>and the Langlands program</p><p class="profile-affiliation placeholder">MPIM Bonn</p><div class="profile-links"><a href="index.html#contact">Contact</a><a href="files/cv.pdf">Curriculum vitae</a><!-- Add verified ORCID, arXiv, or institutional profile links here. --></div></aside>
+-<main id="main"><p class="eyebrow">Teaching</p><h1>Teaching</h1><p class="placeholder">[Add a brief introduction to your teaching interests or experience.]</p>
++---
++title: Teaching
++---
++<p class="eyebrow">Teaching</p><h1>Teaching</h1><p class="placeholder">[Add a brief introduction to your teaching interests or experience.]</p>
+ <section><h2>Courses</h2><p class="editor-note">Replace this example with your actual teaching record.</p><article class="entry"><p class="entry-meta">[Term and year] · [Institution]</p><h3>[Course number and title]</h3><p>[Role: instructor, teaching assistant, or other]</p><p>[Course description, topics, and any publicly available resources.]</p><!-- Add real course or notes links here. --></article></section>
+-<section><h2>Teaching materials</h2><p class="placeholder">[Add lecture notes, problem sheets, or other resources you wish to share, or remove this section.]</p></section></main></div>
+-<footer><div class="footer-inner"><span>© Connor Halleck-Dube</span><span>Mathematics · Research · Teaching</span></div></footer></body></html>
++<section><h2>Teaching materials</h2><p class="placeholder">[Add lecture notes, problem sheets, or other resources you wish to share, or remove this section.]</p></section>
+-- 
+2.51.1
+

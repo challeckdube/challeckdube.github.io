@@ -1,8 +1,35 @@
 ---
 title: Research
 ---
-<p class="eyebrow">Research</p><h1>Research &amp; publications</h1><p class="lead">Geometric representation theory, the Langlands program, and the geometry of moduli spaces.</p>
-<section><h2>Research interests</h2><p>My interests center on Hitchin fibrations, endoscopy, and affine Springer fibers, including their role in the weighted fundamental lemma. I am also interested in singular support and characteristic cycles on affine Grassmannians in positive characteristic.</p></section>
-<section><h2>Papers &amp; preprints</h2><p class="editor-note">The entries below are placeholders, not a publication record.</p>
-<article class="entry"><p class="entry-meta">[Year] · [Preprint or journal reference]</p><h3>[Title of paper]</h3><p>[Authors, in publication order]</p><p>[A short description of the result and its mathematical context.]</p><details><summary>Abstract</summary><p>[Insert the abstract here. Remove this expandable section if you prefer a shorter publication list.]</p></details><!-- Add real links here: <p class="paper-links"><a href="files/paper.pdf">PDF</a> <a href="https://arxiv.org/abs/ACTUAL-ID">arXiv</a></p> --></article>
-</section><section><h2>Thesis &amp; notes</h2><article class="entry"><h3>[Thesis or expository note title]</h3><p class="placeholder">[Institution or context, year, and a brief description.]</p><!-- Add a link after uploading your PDF to files/. --></article></section>
+{% assign materials = site.data.materials %}
+{% assign material_base = materials.use_local %}
+<p class="eyebrow">Research</p>
+<h1>Research &amp; publications</h1>
+<p class="lead">Geometric representation theory, the Langlands program, and the geometry of moduli spaces.</p>
+
+<section>
+  <h2>Research interests</h2>
+  <p>My interests center on Hitchin fibrations, endoscopy, and affine Springer fibers, including their role in the weighted fundamental lemma. I am also interested in singular support and characteristic cycles on affine Grassmannians in positive characteristic.</p>
+</section>
+
+<section>
+  <h2>Research documents</h2>
+  {% for item in materials.research %}
+  <article class="entry">
+    <h3>{{ item.title | escape }}</h3>
+    <p>{{ item.description | escape }}</p>
+    <p class="paper-links"><a href="{% if material_base %}{{ item.local | relative_url }}{% else %}{{ item.source }}{% endif %}">{{ item.label | default: 'PDF' }}</a>{% unless material_base %} <span class="entry-meta">(external copy)</span>{% endunless %}</p>
+  </article>
+  {% endfor %}
+</section>
+
+<section>
+  <h2>Expository writings</h2>
+  <p>Notes and expository materials from algebraic geometry, number theory, and representation theory.</p>
+  {% for item in materials.expository %}
+  <article class="entry">
+    <h3>{{ item.title | escape }}</h3>
+    <p class="paper-links"><a href="{% if material_base %}{{ item.local | relative_url }}{% else %}{{ item.source }}{% endif %}">PDF</a>{% unless material_base %} <span class="entry-meta">(external copy)</span>{% endunless %}</p>
+  </article>
+  {% endfor %}
+</section>

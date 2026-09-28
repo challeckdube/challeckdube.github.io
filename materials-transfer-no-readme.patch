@@ -1,0 +1,207 @@
+diff --git a/_data/materials.yml b/_data/materials.yml
+new file mode 100644
+index 0000000..a87ed71
+--- /dev/null
++++ b/_data/materials.yml
+@@ -0,0 +1,77 @@
++# Materials linked from the former Berkeley page. Set use_local to true after
++# running scripts/download-materials.sh to serve the PDFs from this site.
++use_local: false
++research:
++  - title: Research statement
++    label: PDF
++    source: https://math.berkeley.edu/~chd/RS.pdf
++    local: /files/research/research-statement.pdf
++    description: Current research statement, including work on the weighted fundamental lemma and proposed projects.
++  - title: The Weighted Fundamental Lemma for nonsplit groups
++    label: Draft
++    source: https://math.berkeley.edu/~chd/expo/WFL.pdf
++    local: /files/research/weighted-fundamental-lemma-draft.pdf
++    description: Draft thesis manuscript on the cohomological weighted fundamental lemma for quasi-split groups.
++expository:
++  - title: Some Remarks on Galois Cohomology
++    source: https://math.berkeley.edu/~chd/expo/Gal_Coh.pdf
++    local: /files/expository/galois-cohomology.pdf
++  - title: Some Notes on the Berkeley 2021 RTG Workshop
++    source: https://math.berkeley.edu/~chd/expo/2021_RTG_Workshop_Ellenberg_Zureick_Brown.pdf
++    local: /files/expository/2021-rtg-workshop-notes.pdf
++  - title: GAGA
++    source: https://math.berkeley.edu/~chd/expo/GAGA.pdf
++    local: /files/expository/gaga.pdf
++  - title: Modular Forms and Sums of Squares
++    source: https://math.berkeley.edu/~chd/expo/Modular_Forms_Sums_of_Squares.pdf
++    local: /files/expository/modular-forms-and-sums-of-squares.pdf
++  - title: Artin Comparison Theorem
++    source: https://math.berkeley.edu/~chd/expo/Comparison_Theorem.pdf
++    local: /files/expository/artin-comparison-theorem.pdf
++  - title: Kontsevich's Formula for Rational Plane Curves
++    source: https://math.berkeley.edu/~chd/expo/kontsevich_formula.pdf
++    local: /files/expository/kontsevich-formula.pdf
++  - title: Slides on Kontsevich's Formula
++    source: https://math.berkeley.edu/~chd/expo/kontsevich_slides.pdf
++    local: /files/expository/kontsevich-formula-slides.pdf
++reu:
++  - number: 1
++    title: Problem Set 1
++    source: https://math.berkeley.edu/~chd/REU/REU_Pset1.pdf
++    local: /files/reu/problem-set-1.pdf
++  - number: 2
++    title: Problem Set 2
++    source: https://math.berkeley.edu/~chd/REU/REU_Pset2.pdf
++    local: /files/reu/problem-set-2.pdf
++  - number: 3
++    title: Problem Set 3
++    source: https://math.berkeley.edu/~chd/REU/REU_Pset3.pdf
++    local: /files/reu/problem-set-3.pdf
++  - number: 4
++    title: Problem Set 4
++    source: https://math.berkeley.edu/~chd/REU/REU_Pset4.pdf
++    local: /files/reu/problem-set-4.pdf
++  - number: 5
++    title: Problem Set 5
++    source: https://math.berkeley.edu/~chd/REU/REU_Pset5.pdf
++    local: /files/reu/problem-set-5.pdf
++  - number: 6
++    title: Problem Set 6
++    source: https://math.berkeley.edu/~chd/REU/REU_Pset6.pdf
++    local: /files/reu/problem-set-6.pdf
++  - number: 7
++    title: Problem Set 7
++    source: https://math.berkeley.edu/~chd/REU/REU_Pset7.pdf
++    local: /files/reu/problem-set-7.pdf
++  - number: 8
++    title: Problem Set 8
++    source: https://math.berkeley.edu/~chd/REU/REU_Pset8.pdf
++    local: /files/reu/problem-set-8.pdf
++  - number: 9
++    title: Problem Set 9
++    source: https://math.berkeley.edu/~chd/REU/REU_Pset9.pdf
++    local: /files/reu/problem-set-9.pdf
++  - number: OI
++    title: Orbital Integrals Problems
++    source: https://math.berkeley.edu/~chd/REU/REU_OI_Problems.pdf
++    local: /files/reu/orbital-integrals-problems.pdf
+diff --git a/research.html b/research.html
+index 9d5e57e..3fcd7f9 100644
+--- a/research.html
++++ b/research.html
+@@ -1,8 +1,35 @@
+ ---
+ title: Research
+ ---
+-<p class="eyebrow">Research</p><h1>Research &amp; publications</h1><p class="lead">Geometric representation theory, the Langlands program, and the geometry of moduli spaces.</p>
+-<section><h2>Research interests</h2><p>My interests center on Hitchin fibrations, endoscopy, and affine Springer fibers, including their role in the weighted fundamental lemma. I am also interested in singular support and characteristic cycles on affine Grassmannians in positive characteristic.</p></section>
+-<section><h2>Papers &amp; preprints</h2><p class="editor-note">The entries below are placeholders, not a publication record.</p>
+-<article class="entry"><p class="entry-meta">[Year] · [Preprint or journal reference]</p><h3>[Title of paper]</h3><p>[Authors, in publication order]</p><p>[A short description of the result and its mathematical context.]</p><details><summary>Abstract</summary><p>[Insert the abstract here. Remove this expandable section if you prefer a shorter publication list.]</p></details><!-- Add real links here: <p class="paper-links"><a href="files/paper.pdf">PDF</a> <a href="https://arxiv.org/abs/ACTUAL-ID">arXiv</a></p> --></article>
+-</section><section><h2>Thesis &amp; notes</h2><article class="entry"><h3>[Thesis or expository note title]</h3><p class="placeholder">[Institution or context, year, and a brief description.]</p><!-- Add a link after uploading your PDF to files/. --></article></section>
++{% assign materials = site.data.materials %}
++{% assign material_base = materials.use_local %}
++<p class="eyebrow">Research</p>
++<h1>Research &amp; publications</h1>
++<p class="lead">Geometric representation theory, the Langlands program, and the geometry of moduli spaces.</p>
++
++<section>
++  <h2>Research interests</h2>
++  <p>My interests center on Hitchin fibrations, endoscopy, and affine Springer fibers, including their role in the weighted fundamental lemma. I am also interested in singular support and characteristic cycles on affine Grassmannians in positive characteristic.</p>
++</section>
++
++<section>
++  <h2>Research documents</h2>
++  {% for item in materials.research %}
++  <article class="entry">
++    <h3>{{ item.title | escape }}</h3>
++    <p>{{ item.description | escape }}</p>
++    <p class="paper-links"><a href="{% if material_base %}{{ item.local | relative_url }}{% else %}{{ item.source }}{% endif %}">{{ item.label | default: 'PDF' }}</a>{% unless material_base %} <span class="entry-meta">(external copy)</span>{% endunless %}</p>
++  </article>
++  {% endfor %}
++</section>
++
++<section>
++  <h2>Expository writings</h2>
++  <p>Notes and expository materials from algebraic geometry, number theory, and representation theory.</p>
++  {% for item in materials.expository %}
++  <article class="entry">
++    <h3>{{ item.title | escape }}</h3>
++    <p class="paper-links"><a href="{% if material_base %}{{ item.local | relative_url }}{% else %}{{ item.source }}{% endif %}">PDF</a>{% unless material_base %} <span class="entry-meta">(external copy)</span>{% endunless %}</p>
++  </article>
++  {% endfor %}
++</section>
+diff --git a/scripts/download-materials.sh b/scripts/download-materials.sh
+new file mode 100755
+index 0000000..8bb17d4
+--- /dev/null
++++ b/scripts/download-materials.sh
+@@ -0,0 +1,40 @@
++#!/usr/bin/env bash
++set -eu
++
++ROOT=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
++cd "$ROOT"
++
++mkdir -p files/research files/expository files/reu
++
++download() {
++  url="$1"
++  destination="$2"
++  printf 'Downloading %s\n' "$destination"
++  curl --fail --location --silent --show-error "$url" --output "$destination"
++}
++
++download 'https://math.berkeley.edu/~chd/RS.pdf' files/research/research-statement.pdf
++download 'https://math.berkeley.edu/~chd/expo/WFL.pdf' files/research/weighted-fundamental-lemma-draft.pdf
++download 'https://math.berkeley.edu/~chd/expo/Gal_Coh.pdf' files/expository/galois-cohomology.pdf
++download 'https://math.berkeley.edu/~chd/expo/2021_RTG_Workshop_Ellenberg_Zureick_Brown.pdf' files/expository/2021-rtg-workshop-notes.pdf
++download 'https://math.berkeley.edu/~chd/expo/GAGA.pdf' files/expository/gaga.pdf
++download 'https://math.berkeley.edu/~chd/expo/Modular_Forms_Sums_of_Squares.pdf' files/expository/modular-forms-and-sums-of-squares.pdf
++download 'https://math.berkeley.edu/~chd/expo/Comparison_Theorem.pdf' files/expository/artin-comparison-theorem.pdf
++download 'https://math.berkeley.edu/~chd/expo/kontsevich_formula.pdf' files/expository/kontsevich-formula.pdf
++download 'https://math.berkeley.edu/~chd/expo/kontsevich_slides.pdf' files/expository/kontsevich-formula-slides.pdf
++
++for number in 1 2 3 4 5 6 7 8 9; do
++  download "https://math.berkeley.edu/~chd/REU/REU_Pset${number}.pdf" "files/reu/problem-set-${number}.pdf"
++done
++download 'https://math.berkeley.edu/~chd/REU/REU_OI_Problems.pdf' files/reu/orbital-integrals-problems.pdf
++
++python3 - <<'PY'
++from pathlib import Path
++p = Path('_data/materials.yml')
++s = p.read_text()
++if 'use_local: false' not in s:
++    raise SystemExit('Expected use_local: false in _data/materials.yml')
++p.write_text(s.replace('use_local: false', 'use_local: true', 1))
++PY
++
++printf 'Downloaded all materials and switched the site to local PDF links.\n'
+diff --git a/teaching.html b/teaching.html
+index 8eded71..3280ca1 100644
+--- a/teaching.html
++++ b/teaching.html
+@@ -1,6 +1,25 @@
+ ---
+ title: Teaching
+ ---
+-<p class="eyebrow">Teaching</p><h1>Teaching</h1><p class="placeholder">[Add a brief introduction to your teaching interests or experience.]</p>
+-<section><h2>Courses</h2><p class="editor-note">Replace this example with your actual teaching record.</p><article class="entry"><p class="entry-meta">[Term and year] · [Institution]</p><h3>[Course number and title]</h3><p>[Role: instructor, teaching assistant, or other]</p><p>[Course description, topics, and any publicly available resources.]</p><!-- Add real course or notes links here. --></article></section>
+-<section><h2>Teaching materials</h2><p class="placeholder">[Add lecture notes, problem sheets, or other resources you wish to share, or remove this section.]</p></section>
++{% assign materials = site.data.materials %}
++{% assign material_base = materials.use_local %}
++<p class="eyebrow">Teaching</p>
++<h1>Teaching</h1>
++<p>I enjoy teaching through open-ended problems that connect concrete calculations with broader mathematical ideas. The materials below were developed for the 2025 Consuman REU group.</p>
++
++<section>
++  <h2>2025 REU materials</h2>
++  <p>The introductory problem sets develop linear algebra, finite fields, power series, Haar measure, Hecke algebras, and affine Grassmannian ideas. The final item is a separate problem set on orbital integrals.</p>
++  {% for item in materials.reu %}
++  <article class="entry">
++    <h3>{{ item.title | escape }}</h3>
++    <p class="paper-links"><a href="{% if material_base %}{{ item.local | relative_url }}{% else %}{{ item.source }}{% endif %}">PDF</a>{% unless material_base %} <span class="entry-meta">(external copy)</span>{% endunless %}</p>
++  </article>
++  {% endfor %}
++</section>
++
++<section>
++  <h2>Teaching and mentoring</h2>
++  <p>My teaching and mentoring experience includes graduate instruction at UC Berkeley, summer REU mentorship, and participation in intensive inquiry-based summer programs.</p>
++  <p>For the complete teaching record, see the <a href="{{ site.data.site.cv | relative_url }}">curriculum vitae</a>.</p>
++</section>
