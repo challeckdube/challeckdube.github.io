@@ -2,16 +2,11 @@
 # running scripts/download-materials.sh to serve the PDFs from this site.
 use_local: true
 research:
-  - title: Research statement
-    label: PDF
-    source: https://math.berkeley.edu/~chd/RS.pdf
-    local: /files/research/research-statement.pdf
-    description: Current research statement, including work on the weighted fundamental lemma and proposed projects.
   - title: The Weighted Fundamental Lemma for nonsplit groups
     label: Draft
     source: https://math.berkeley.edu/~chd/expo/WFL.pdf
     local: /files/research/weighted-fundamental-lemma-draft.pdf
-    description: Draft thesis manuscript on the cohomological weighted fundamental lemma for quasi-split groups.
+    description: Draft manuscript of the weighted fundamental lemma and nonstandard weighted fundamental lemma for quasi-split groups.
 expository:
   - title: Some Remarks on Galois Cohomology
     source: https://math.berkeley.edu/~chd/expo/Gal_Coh.pdf
