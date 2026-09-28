@@ -7,6 +7,11 @@ research:
     source: https://math.berkeley.edu/~chd/expo/WFL.pdf
     local: /files/research/weighted-fundamental-lemma-draft.pdf
     description: Draft manuscript of the weighted fundamental lemma and nonstandard weighted fundamental lemma for quasi-split groups.
+  - title: "Enumerating Hassett's wall and chamber decomposition of the moduli space of weighted stable curves"
+    label: arXiv
+    source: https://arxiv.org/abs/1709.03663
+    local: null
+    description: With Kenneth Ascher, Daniel Gershenson, and Elaine Hou. Experimental Mathematics 29 (2020), 36–53.
 expository:
   - title: Some Remarks on Galois Cohomology
     source: https://math.berkeley.edu/~chd/expo/Gal_Coh.pdf
