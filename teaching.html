@@ -15,7 +15,7 @@ title: Teaching
   <ul class="material-list">
   {% for item in materials.reu %}
     <li>
-      <span class="material-number">{% if item.number == 'OI' %}OI{% else %}{{ item.number }}{% endif %}</span>
+      <!-- <span class="material-number">{% if item.number == 'OI' %}OI{% else %}{{ item.number }}{% endif %}</span> -->
       <span class="material-title">{{ item.title | escape }}</span>
       <a class="material-link" href="{% if material_base %}{{ item.local | relative_url }}{% else %}{{ item.source }}{% endif %}">PDF</a>
       {% unless material_base %}<span class="entry-meta">(external copy)</span>{% endunless %}
