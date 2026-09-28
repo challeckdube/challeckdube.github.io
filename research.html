@@ -18,7 +18,7 @@ title: Research
   <article class="entry">
     <h3>{{ item.title | escape }}</h3>
     <p>{{ item.description | escape }}</p>
-    <p class="paper-links"><a href="{% if material_base and item.local %}{{ item.local | relative_url }}{% else %}{{ item.source }}{% endif %}">{{ item.label | default: 'PDF' }}</a>{% unless material_base and item.local %} <span class="entry-meta">(external link)</span>{% endunless %}</p>
+    <p class="paper-links"><a href="{% if material_base and item.local %}{{ item.local | relative_url }}{% else %}{{ item.source }}{% endif %}">{{ item.label | default: 'PDF' }}</a></p>
   </article>
   {% endfor %}
 </section>
