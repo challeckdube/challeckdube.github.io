@@ -26,5 +26,7 @@ navigation:
   url: /teaching.html
 - label: Talks
   url: /talks.html
+- label: Mathematics and AI Seminar
+  url: /mathematics-and-ai-seminar.html
 - label: CV
   url: /files/cv.pdf
