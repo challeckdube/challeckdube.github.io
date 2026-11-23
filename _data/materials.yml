@@ -3,10 +3,10 @@
 use_local: true
 research:
   - title: The Weighted Fundamental Lemma for nonsplit groups
-    label: Draft
-    source: https://math.berkeley.edu/~chd/expo/WFL.pdf
-    local: /files/research/weighted-fundamental-lemma-draft.pdf
-    description: Draft manuscript of the weighted fundamental lemma and nonstandard weighted fundamental lemma for quasi-split groups.
+    label: arXiv
+    source: https://arxiv.org/abs/2611.26750
+    local: https://arxiv.org/abs/2611.26750
+    description: Preprint proving the weighted fundamental lemma and nonstandard weighted fundamental lemma for quasi-split groups.
   - title: "Enumerating Hassett's wall and chamber decomposition of the moduli space of weighted stable curves"
     label: arXiv
     source: https://arxiv.org/abs/1709.03663
